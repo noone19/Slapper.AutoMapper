@@ -527,7 +527,7 @@ namespace Slapper
                         if (memberType.IsClass || memberType.IsInterface)
                         {
                             // Try to find any keys that start with the current member name
-                            var nestedDictionary = dictionary.Where(x => x.Key.ToLower().StartsWith(memberName + "_")).ToList();
+                            var nestedDictionary = dictionary.Where(x => x.Key.StartsWith(memberName + "_", StringComparison.OrdinalIgnoreCase)).ToList();
 
                             // If there weren't any keys
                             if (!nestedDictionary.Any())
