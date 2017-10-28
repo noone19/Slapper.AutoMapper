@@ -80,16 +80,17 @@ namespace Slapper
             /// </summary>
             public struct InstanceKey : IEquatable<InstanceKey>
             {
-                public bool Equals(InstanceKey other) {
-                    return Equals(Type, other.Type) 
-                        && Equals(ParentInstance, other.ParentInstance) 
+                public bool Equals(InstanceKey other)
+                {
+                    return Equals(Type, other.Type)
+                        && Equals(ParentInstance, other.ParentInstance)
                         && StructuralComparisons.StructuralEqualityComparer.Equals(IdentifierValues, other.IdentifierValues);
                 }
 
                 public override bool Equals(object obj)
                 {
                     if (ReferenceEquals(null, obj)) return false;
-                    return obj is InstanceKey && Equals((InstanceKey) obj);
+                    return obj is InstanceKey && Equals((InstanceKey)obj);
                 }
 
                 public override int GetHashCode()
@@ -111,9 +112,9 @@ namespace Slapper
                     ParentInstance = parentInstance;
                 }
 
-                public  Type Type { get; }
+                public Type Type { get; }
                 public object[] IdentifierValues { get; }
-                public object ParentInstance { get;  }
+                public object ParentInstance { get; }
             }
 
             /// <summary>
@@ -198,14 +199,25 @@ namespace Slapper
 
                     if (fieldInfo != null)
                     {
-                        if (fieldInfo.GetCustomAttributes(Configuration.IdentifierAttributeType, false).Length > 0)
+                        if (Configuration.DisableCustomAttributes)
                         {
-                            identifiers.Add(memberName);
+                            if (conventionIdentifiers.Exists(x => x.ToLower() == memberName.ToLower()))
+                            {
+                                identifiers.Add(memberName);
+                            }
                         }
-                        else if (conventionIdentifiers.Exists(x => x.ToLower() == memberName.ToLower()))
+                        else
                         {
-                            identifiers.Add(memberName);
+                            if (fieldInfo.GetCustomAttributes(Configuration.IdentifierAttributeType, false).Length > 0)
+                            {
+                                identifiers.Add(memberName);
+                            }
+                            else if (conventionIdentifiers.Exists(x => x.ToLower() == memberName.ToLower()))
+                            {
+                                identifiers.Add(memberName);
+                            }
                         }
+
                     }
                     else
                     {
@@ -213,13 +225,23 @@ namespace Slapper
 
                         if (propertyInfo != null)
                         {
-                            if (propertyInfo.GetCustomAttributes(Configuration.IdentifierAttributeType, false).Length > 0)
+                            if (Configuration.DisableCustomAttributes)
                             {
-                                identifiers.Add(memberName);
+                                if (conventionIdentifiers.Exists(x => x.ToLower() == memberName.ToLower()))
+                                {
+                                    identifiers.Add(memberName);
+                                }
                             }
-                            else if (conventionIdentifiers.Exists(x => x.ToLower() == memberName.ToLower()))
+                            else
                             {
-                                identifiers.Add(memberName);
+                                if (propertyInfo.GetCustomAttributes(Configuration.IdentifierAttributeType, false).Length > 0)
+                                {
+                                    identifiers.Add(memberName);
+                                }
+                                else if (conventionIdentifiers.Exists(x => x.ToLower() == memberName.ToLower()))
+                                {
+                                    identifiers.Add(memberName);
+                                }
                             }
                         }
                     }
