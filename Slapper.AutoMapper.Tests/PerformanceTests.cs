@@ -195,6 +195,7 @@ namespace Slapper.Tests
         ///     After disabling custom attributes: cca 12 sec
         ///     after removing toLower for comparison (to avoid unnecessary obj creation): cca 9sec
         ///     after removing another tolower for dictionary lookup: cca 7sec
+        ///     after moving unecessary regex creation: cca 5.8sec
         /// </remarks>
         public void Complex_Performance_Test_More_Data()
         {

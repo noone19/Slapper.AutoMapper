@@ -545,9 +545,11 @@ namespace Slapper
 
                                 continue;
                             }
-                            var regex = new Regex(Regex.Escape(memberName + "_"));
-                            var newDictionary = nestedDictionary.ToDictionary(pair => regex.Replace(pair.Key.ToLower(), string.Empty, 1),
-                                pair => pair.Value, StringComparer.OrdinalIgnoreCase);
+
+                            var memberLength = memberName.Length + 1;
+                            var newDictionary = nestedDictionary.ToDictionary(
+                                pair => pair.Key.Substring(memberLength, pair.Key.Length - memberLength)
+                                .ToLowerInvariant(), pair => pair.Value, StringComparer.OrdinalIgnoreCase);
 
                             // Try to get the value of the complex member. If the member
                             // hasn't been initialized, then this will return null.
