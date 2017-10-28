@@ -528,10 +528,10 @@ namespace Slapper
                         {
                             // Try to find any keys that start with the current member name
                             var startsWithEval = string.Concat(memberName, "_");
-                            var nestedDictionary = dictionary.Where(x => x.Key.StartsWith(startsWithEval, StringComparison.OrdinalIgnoreCase)).ToList();
+                            //var nestedDictionary = dictionary.Where(x => x.Key.StartsWith(startsWithEval, StringComparison.OrdinalIgnoreCase)).ToList();
 
                             // If there weren't any keys
-                            if (!nestedDictionary.Any())
+                            if (!dictionary.Any(x => x.Key.StartsWith(startsWithEval, StringComparison.OrdinalIgnoreCase)))
                             {
                                 // And the parent instance was not null
                                 if (parentInstance != null)
@@ -548,7 +548,7 @@ namespace Slapper
                             }
 
                             var memberLength = memberName.Length + 1;
-                            var newDictionary = nestedDictionary.ToDictionary(
+                            var newDictionary = dictionary.Where(x => x.Key.StartsWith(startsWithEval, StringComparison.OrdinalIgnoreCase)).ToDictionary(
                                 pair => pair.Key.Substring(memberLength, pair.Key.Length - memberLength)
                                 .ToLowerInvariant(), pair => pair.Value, StringComparer.OrdinalIgnoreCase);
 
