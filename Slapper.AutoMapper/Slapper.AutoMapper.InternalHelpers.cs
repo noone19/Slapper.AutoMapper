@@ -507,16 +507,17 @@ namespace Slapper
                     {
                         throw new InvalidCastException("For lists of primitive types, include $ as the name of the property");
                     }
-
+                    
                     instance = value;
                     return instance;
                 }
 
                 var fieldsAndProperties = GetFieldsAndProperties(instance.GetType());
 
+                var newDictionary = new Dictionary<string, object>(dictionary.Count, StringComparer.OrdinalIgnoreCase);
                 foreach (var fieldOrProperty in fieldsAndProperties)
                 {
-                    var memberName = fieldOrProperty.Key.ToLower();
+                    var memberName = fieldOrProperty.Key;
 
                     var member = fieldOrProperty.Value;
 
@@ -556,9 +557,13 @@ namespace Slapper
                             }
 
                             var memberLength = memberName.Length + 1;
-                            var newDictionary = dictionary.Where(x => x.Key.StartsWith(startsWithEval, StringComparison.OrdinalIgnoreCase)).ToDictionary(
-                                pair => pair.Key.Substring(memberLength, pair.Key.Length - memberLength)
-                                .ToLowerInvariant(), pair => pair.Value, StringComparer.OrdinalIgnoreCase);
+
+                            var keys = dictionary.Where(x => x.Key.StartsWith(startsWithEval, StringComparison.OrdinalIgnoreCase));
+                            newDictionary.Clear();
+                            foreach (var item in keys)
+                            {
+                                newDictionary.Add(item.Key.Substring(memberLength, item.Key.Length - memberLength), item.Value);
+                            }
 
                             // Try to get the value of the complex member. If the member
                             // hasn't been initialized, then this will return null.
