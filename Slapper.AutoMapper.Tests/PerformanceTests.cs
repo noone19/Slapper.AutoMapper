@@ -193,6 +193,7 @@ namespace Slapper.Tests
         /// Historical Test Results
         ///     v1.0.0.9: Mapped 50000 objects in cca 18 sec
         ///     After disabling custom attributes: cca 12 sec
+        ///     after removing toLower for comparison (to avoid unnecessary obj creation): cca 9sec
         ///     
         /// </remarks>
         public void Complex_Performance_Test_More_Data()

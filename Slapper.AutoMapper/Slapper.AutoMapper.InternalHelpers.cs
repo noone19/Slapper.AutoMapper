@@ -201,7 +201,7 @@ namespace Slapper
                     {
                         if (Configuration.DisableCustomAttributes)
                         {
-                            if (conventionIdentifiers.Exists(x => x.ToLower() == memberName.ToLower()))
+                            if (conventionIdentifiers.Exists(x => x.Equals(memberName, StringComparison.OrdinalIgnoreCase)))
                             {
                                 identifiers.Add(memberName);
                             }
@@ -212,7 +212,7 @@ namespace Slapper
                             {
                                 identifiers.Add(memberName);
                             }
-                            else if (conventionIdentifiers.Exists(x => x.ToLower() == memberName.ToLower()))
+                            else if (conventionIdentifiers.Exists(x => x.Equals(memberName, StringComparison.OrdinalIgnoreCase)))
                             {
                                 identifiers.Add(memberName);
                             }
@@ -227,7 +227,7 @@ namespace Slapper
                         {
                             if (Configuration.DisableCustomAttributes)
                             {
-                                if (conventionIdentifiers.Exists(x => x.ToLower() == memberName.ToLower()))
+                                if (conventionIdentifiers.Exists(x => x.Equals(memberName, StringComparison.OrdinalIgnoreCase)))
                                 {
                                     identifiers.Add(memberName);
                                 }
@@ -238,7 +238,7 @@ namespace Slapper
                                 {
                                     identifiers.Add(memberName);
                                 }
-                                else if (conventionIdentifiers.Exists(x => x.ToLower() == memberName.ToLower()))
+                                else if (conventionIdentifiers.Exists(x => x.Equals(memberName, StringComparison.OrdinalIgnoreCase)))
                                 {
                                     identifiers.Add(memberName);
                                 }
