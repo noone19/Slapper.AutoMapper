@@ -196,6 +196,7 @@ namespace Slapper.Tests
         ///     after removing toLower for comparison (to avoid unnecessary obj creation): cca 9sec
         ///     after removing another tolower for dictionary lookup: cca 7sec
         ///     after moving unecessary regex creation: cca 5.8sec
+        ///     after avoiding string concationation in a where clause: cca 5.7sec
         /// </remarks>
         public void Complex_Performance_Test_More_Data()
         {
